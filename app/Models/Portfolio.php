@@ -16,6 +16,7 @@ class Portfolio extends Model
     ];
 
     protected $casts = [
-        'tag' => 'array'
+        'tag' => 'array',
+        'thumbnail' => 'array'
     ];
 }

@@ -31,18 +31,7 @@ class PortfolioResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')->required(),
-                FileUpload::make('thumbnail')
-                    ->maxSize(3000),
-                // ->deleteUploadedFile(function ($file) {
-                //     Storage::disk('public')->delete($file);
-                // }),
-                MarkdownEditor::make('description')
-                    ->disableToolbarButtons([
-                        'attachFiles',
-                        'codeBlock',
-                        'link',
-                        'strike'
-                    ]),
+               
                 CheckboxList::make('tag')
                     ->options([
                         'laravel'   => 'Laravel',
@@ -57,7 +46,21 @@ class PortfolioResource extends Resource
                 TextInput::make('website')
                     ->url()
                     ->prefix('https://')
-                    ->suffix('.com')
+                    ->suffix('.com'),
+                FileUpload::make('thumbnail')
+                    ->maxSize(3000)
+                    ->multiple()
+                    ->directory('portfolios')
+                    ->uploadingMessage('Uploading attachment...')
+                    ,
+                    
+                MarkdownEditor::make('description')
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                        'codeBlock',
+                        'link',
+                        'strike'
+                    ]),
             ]);
     }
 
@@ -67,7 +70,8 @@ class PortfolioResource extends Resource
             ->columns([
                 TextColumn::make('title'),
                 ImageColumn::make('thumbnail')
-                    ->height(50),
+                    ->height(50)
+                    ->getStateUsing(fn (Portfolio $record): ?string => collect($record->thumbnail)->first()),
                 TextColumn::make('description')
                     ->limit(50)
                     ->html(),
