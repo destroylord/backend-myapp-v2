@@ -17,8 +17,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class PortfolioResource extends Resource
 {
@@ -48,12 +47,13 @@ class PortfolioResource extends Resource
                     ->prefix('https://')
                     ->suffix('.com'),
                 FileUpload::make('thumbnail')
-                    ->maxSize(3000)
                     ->multiple()
+                    ->maxSize(3000)
+                    ->openable()
                     ->directory('portfolios')
-                    ->uploadingMessage('Uploading attachment...')
-                    ,
-                    
+                    ->required()
+                    ->image()
+                    ->visibility('public'),                  
                 MarkdownEditor::make('description')
                     ->disableToolbarButtons([
                         'attachFiles',
@@ -85,9 +85,18 @@ class PortfolioResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()->label('Delete Portfolio')
+                ->after(function (Portfolio $record) {
+                    if ($record->thumbnail) {
+                        foreach ($record->thumbnail as $ph) {
+                            Storage::delete($ph);
+                        }
+                    }
+                }),
+
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
