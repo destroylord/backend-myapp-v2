@@ -1,0 +1,220 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Portfolio API Documentation",
+        "description": "API Documentation for Portfolio System",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/archivement": {
+            "get": {
+                "tags": [
+                    "Archivements"
+                ],
+                "summary": "Get all Archivements",
+                "operationId": "189e8dbc3ae33bd3db8535b5f3c080f0",
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/archivement/{id}": {
+            "get": {
+                "tags": [
+                    "Archivements"
+                ],
+                "summary": "Get Archivement by ID",
+                "operationId": "d16b6806f3ae4f9891823ff3c63e19eb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Archivement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    },
+                    "404": {
+                        "description": "Archivement not found"
+                    }
+                }
+            }
+        },
+        "/education": {
+            "get": {
+                "tags": [
+                    "Education"
+                ],
+                "summary": "Get first education record",
+                "operationId": "bc5a9186798134e50ff103b3e9efb496",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Education not found"
+                    }
+                }
+            }
+        },
+        "/experience": {
+            "get": {
+                "tags": [
+                    "Experience"
+                ],
+                "summary": "Get list of experiences",
+                "operationId": "f9da3ce4d08ef88c19e2fb36b3741cb4",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/experience/{id}": {
+            "get": {
+                "tags": [
+                    "Experience"
+                ],
+                "summary": "Get experience by ID",
+                "operationId": "95c4e957ae4be292a9f49342215077e4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of experience to return",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Experience not found"
+                    }
+                }
+            }
+        },
+        "/portofolio": {
+            "get": {
+                "tags": [
+                    "Portfolio"
+                ],
+                "summary": "Get list of portfolios",
+                "operationId": "8015a75bee24dd2b3402ade9ac2bc497",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/portofolio/{id}": {
+            "get": {
+                "tags": [
+                    "Portfolio"
+                ],
+                "summary": "Get portfolio by ID",
+                "operationId": "22a3a68751e5c1db604eb3b9bca9e307",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get profile details",
+                "description": "Returns profile information",
+                "operationId": "07b6ea67780ca735b9306cf50d358094",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Profile not found"
+                    }
+                }
+            }
+        },
+        "/skill": {
+            "get": {
+                "tags": [
+                    "Skill"
+                ],
+                "summary": "Get list of skills",
+                "operationId": "5eea8d63b0702f1699ec2b66d2fb9f99",
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    },
+                    "404": {
+                        "description": "Skill not found"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Archivements",
+            "description": "Archivements"
+        },
+        {
+            "name": "Education",
+            "description": "Education"
+        },
+        {
+            "name": "Experience",
+            "description": "Experience"
+        },
+        {
+            "name": "Portfolio",
+            "description": "Portfolio"
+        },
+        {
+            "name": "Profile",
+            "description": "Profile"
+        },
+        {
+            "name": "Skill",
+            "description": "Skill"
+        }
+    ]
+}

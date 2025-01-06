@@ -2,11 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\ExperienceCategory;
-use App\Filament\Resources\ExperienceResource\Pages;
-use App\Filament\Resources\ExperienceResource\RelationManagers;
-use App\Models\Experience;
-use Carbon\Carbon;
+use App\Filament\Resources\EducationResource\Pages;
+use App\Filament\Resources\EducationResource\RelationManagers;
+use App\Models\Education;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ExperienceResource extends Resource
+class EducationResource extends Resource
 {
-    protected static ?string $model = Experience::class;
+    protected static ?string $model = Education::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,24 +26,13 @@ class ExperienceResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('position')
-                    ->required()
+                Forms\Components\TextInput::make('link')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('company')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('category')
-                    ->options(ExperienceCategory::class)
-                    ->required(),
-                Forms\Components\DatePicker::make('start_date')
-                    ->required(),
-                Forms\Components\DatePicker::make('end_date')
-                    ->label('End Date')
-                    ->helperText('Jika present maka kosongkan saja')
-                    ->nullable()
-                    ->dehydrated(fn (Carbon $date): ?string => $date ?? 'Present'),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
+                Forms\Components\DatePicker::make('start_date')
+                    ->required(),
+                Forms\Components\DatePicker::make('end_date'),
             ]);
     }
 
@@ -55,15 +42,13 @@ class ExperienceResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('position')
+                Tables\Columns\TextColumn::make('link')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('company')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
+                    ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -97,9 +82,9 @@ class ExperienceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListExperiences::route('/'),
-            'create' => Pages\CreateExperience::route('/create'),
-            'edit' => Pages\EditExperience::route('/{record}/edit'),
+            'index' => Pages\ListEducation::route('/'),
+            'create' => Pages\CreateEducation::route('/create'),
+            'edit' => Pages\EditEducation::route('/{record}/edit'),
         ];
     }
 }

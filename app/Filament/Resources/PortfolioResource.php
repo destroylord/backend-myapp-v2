@@ -32,12 +32,13 @@ class PortfolioResource extends Resource
                 TextInput::make('title')->required(),
                
                 CheckboxList::make('tag')
-                    ->options([
-                        'laravel'   => 'Laravel',
-                        'reactjs'   => 'React JS',
-                        'tailwind'  => 'TailwindCss',
-                        'wp'        => 'Woordpress'
-                    ])
+                    ->options(function () {
+                        $skills = \App\Models\Skill::all()->pluck('name', 'id')->toArray();
+                        if (empty($skills)) {
+                            return [];
+                        }
+                        return $skills;
+                    })
                     ->columns(2),
                 TextInput::make('repository')
                     ->url()

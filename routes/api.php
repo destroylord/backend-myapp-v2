@@ -1,47 +1,18 @@
 <?php
 
-/**
- * @OA\Info(
- *     version="1.0.0",
- *     title="MyApp API Documentation",
- *     description="API Documentation for MyApp Personal Portfolio"
- * )
- */
+use Illuminate\Support\Facades\Route;
 
-/**
- * @OA\PathItem(
- *     path="/"
- * )
- */
+Route::get('/portofolio', [\App\Http\Controllers\Api\PortfolioController::class, 'index']);
+Route::get('/portofolio/{id}', [\App\Http\Controllers\Api\PortfolioController::class, 'show']);
 
-/**
- * @OA\PathItem(
- *     path="/api/portofolio"
- * )
- */
+Route::get('/achivement', [\App\Http\Controllers\Api\ArchivementController::class, 'index']);
+Route::get('/achivement/{id}', [\App\Http\Controllers\Api\ArchivementController::class, 'show']);
 
-/**
- * @OA\PathItem(
- *     path="/api/achievement"
- * )
- */
+Route::get('/experience', [\App\Http\Controllers\Api\ExperienceController::class, 'index']);
+Route::get('/experience/{id}', [\App\Http\Controllers\Api\ExperienceController::class, 'show']);
 
-/**
- * @OA\PathItem(
- *     path="/api/experience"
- * )
- */
+Route::get('/profile', [\App\Http\Controllers\Api\ProfileController::class, 'index']);
+Route::get('/profile/{id}', [\App\Http\Controllers\Api\ProfileController::class, 'show']);
 
-/**
- * @OA\PathItem(
- *     path="/api/profile"
- * )
- */
-
-/**
- * @OA\PathItem(
- *     path="/api/skill"
- * )
- */
-
-// ... rest of your existing code remains the same
+Route::get('/skill', [\App\Http\Controllers\Api\SkillController::class, 'index']);
+Route::get('/skill/{id}', [\App\Http\Controllers\Api\SkillController::class, 'show']);

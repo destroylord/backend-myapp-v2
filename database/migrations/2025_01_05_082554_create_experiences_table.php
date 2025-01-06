@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('category', array_column(ExperienceCategory::cases(), 'value'))
                 ->default(ExperienceCategory::FULLTIME->value);
             $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->string('end_date', 10)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
