@@ -12,7 +12,7 @@ class Portfolio extends Model
     protected $table = 'portfolios';
 
     protected $fillable = [
-        'title', 'thumbnail', 'description', 'tag', 'repository', 'website'
+        'title','slug', 'thumbnail', 'description', 'tag', 'repository', 'website'
     ];
 
     protected $casts = [

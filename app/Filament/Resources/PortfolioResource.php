@@ -16,7 +16,9 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Set;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class PortfolioResource extends Resource
@@ -29,8 +31,13 @@ class PortfolioResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required(),
-               
+                TextInput::make('title')->required()
+                    ->live()
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                TextInput::make('slug')
+                    ->readOnly()
+                    ->required(),
+
                 CheckboxList::make('tag')
                     ->options(function () {
                         $skills = \App\Models\Skill::all()->pluck('name', 'id')->toArray();

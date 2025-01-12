@@ -14,6 +14,17 @@ class PortfolioResource extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return $this->collection->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'slug' => $item->slug,
+                'thumbnail' => $item->thumbnail,
+                'description' => $item->description,
+                'repository' => $item->repository,
+                'website' => $item->website,
+                'tag' => $item->tag
+            ];
+        })->toArray();
     }
 }

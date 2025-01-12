@@ -131,20 +131,20 @@
                 }
             }
         },
-        "/portofolio/{id}": {
+        "/portofolio/{slug}": {
             "get": {
                 "tags": [
                     "Portfolio"
                 ],
-                "summary": "Get portfolio by ID",
-                "operationId": "22a3a68751e5c1db604eb3b9bca9e307",
+                "summary": "Get portfolio by slug",
+                "operationId": "93dcea1b48ae905f9bf48520102f7800",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "slug",
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
