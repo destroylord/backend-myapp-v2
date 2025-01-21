@@ -19,8 +19,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Set permissions
-RUN chown -R www-data:www-data storage bootstrap/cache /var/www/html \
-    && chmod -R 775 storage bootstrap/cache /var/www/html \
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\
     && npm install \
     && npm run build
 
