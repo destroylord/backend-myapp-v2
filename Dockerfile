@@ -22,7 +22,8 @@ COPY . .
 RUN apk add --no-cache nodejs npm && \
     chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     npm install && \
-    npm run build
+    npm run build && \
+    composer install --no-dev --no-interaction --optimize-autoloader
 
 # Expose port
 EXPOSE 9000
