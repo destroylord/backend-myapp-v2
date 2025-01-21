@@ -7,6 +7,7 @@ RUN apk add --no-cache \
     libpq-dev \
     libzip-dev \
     zip \
+    icu-dev \
     && docker-php-ext-install zip pdo pdo_pgsql pcntl intl
 
 # Install Composer
