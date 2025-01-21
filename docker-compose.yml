@@ -6,9 +6,10 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - .:/var/www/html
+            # - .:/var/www/html
             - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-            - ./.env:/var/www/html/.env
+            # - ./.env:/var/www/html/.env
+
 
     web:
         image: nginx:alpine
