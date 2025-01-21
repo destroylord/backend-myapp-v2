@@ -6,4 +6,4 @@ WORKDIR /var/www/html
 # Salin file package.json dan package-lock.json untuk menginstal dependensi
 COPY package*.json ./
 
-RUN npm install && npm run build
+RUN npm install
