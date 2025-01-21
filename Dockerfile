@@ -19,8 +19,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache /var/www/html \
+    && chmod -R 775 storage bootstrap/cache /var/www/html
 
 # Expose port
 EXPOSE 9000
