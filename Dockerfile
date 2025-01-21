@@ -19,9 +19,10 @@ WORKDIR /var/www/html
 COPY . .
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\
-    && npm install \
-    && npm run build
+RUN apk add --no-cache nodejs npm && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    npm install && \
+    npm run build
 
 # Expose port
 EXPOSE 9000
