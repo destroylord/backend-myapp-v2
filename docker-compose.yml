@@ -6,9 +6,12 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - .:/var/www/html
-            - ./storage:/var/www/html/storage
-            - ./public:/var/www/html/public
+            - type: bind
+              source: /var/www/html/backend-myapp-v2/
+              target: /var/www/html/public/storage
+            - type: bind
+              source: /var/www/html/backend-myapp-v2/storage/app/public/
+              target: /var/www/html/public/storage
             - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
 
     web:
