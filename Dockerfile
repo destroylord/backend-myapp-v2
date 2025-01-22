@@ -19,14 +19,20 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
-# Set permissions
-RUN apk add --no-cache nodejs npm && \
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
-    npm install && \
-    npm run build 
+# Set proper permissions for Laravel directories
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-RUN composer install --no-dev --no-interaction --optimize-autoloader
+# Install dependencies and build assets
+RUN composer install --no-dev --no-interaction --optimize-autoloader \
+    && npm install \
+    && npm run build
 
+# Run storage link
+RUN php artisan storage:link || true
 
 # Expose port
 EXPOSE 9000
+
+# Set the user to www-data for runtime
+USER www-data
