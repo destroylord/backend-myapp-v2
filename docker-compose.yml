@@ -6,6 +6,8 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
+            - ./storage:/var/www/html/storage
+            - ./public:/var/www/html/public
             - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
 
     web:
