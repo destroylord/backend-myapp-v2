@@ -8,6 +8,8 @@ RUN apk add --no-cache \
     libzip-dev \
     zip \
     icu-dev \
+    nodejs \
+    npm \
     && docker-php-ext-install zip pdo pdo_pgsql pcntl intl
 
 # Install Composer
@@ -19,14 +21,15 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
-# Set proper permissions for Laravel directories
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Install dependencies and build assets
-RUN composer install --no-dev --no-interaction --optimize-autoloader \
-    && npm install \
-    && npm run build
+# Install PHP dependencies
+RUN composer install --no-dev --no-interaction --optimize-autoloader
+
+# Install Node.js dependencies and build assets
+RUN npm install && npm run build
 
 # Run storage link
 RUN php artisan storage:link || true
