@@ -1,28 +1,54 @@
+# services:
+#     app:
+#         container_name: laravel_app_filament
+#         working_dir: /var/www/html
+#         build:
+#             context: .
+#             dockerfile: Dockerfile
+#         volumes:
+#             - .:/var/www/html
+#             - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+#             - storage:/var/www/html/storage
+
+#     web:
+#         image: nginx:alpine
+#         container_name: laravel_nginx
+#         ports:
+#             - "8100:80"
+#         volumes:
+#             - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+#             - .:/var/www/html
+#             - public:/var/www/html/public
+#         depends_on:
+#             - app
+
+# volumes:
+#     storage:
+#     public:
 services:
-    app:
-        container_name: laravel_app_filament
-        working_dir: /var/www/html
+    laravel-filament-web:
+        container_name: laravel-filament-web
         build:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - type: bind
-              source: /var/www/html/backend-myapp-v2/
-              target: /var/www/html/public/storage
-            - type: bind
-              source: /var/www/html/backend-myapp-v2/storage/app/public/
-              target: /var/www/html/public/storage
-            - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-
-    web:
-        image: nginx:alpine
-        container_name: laravel_nginx
+            - ./public:/var/www/html
+            - .:/var/www
+        networks:
+            - laravel-filament
         ports:
-            - "8100:80"
-        volumes:
-            - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - app
+            - 7271:80
+        restart: unless-stopped
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost/up"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        env_file:
+            - .env
 
-volumes:
-    dbdata:
+networks:
+    laravel-filament:
+        driver: bridge
