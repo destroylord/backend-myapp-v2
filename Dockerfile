@@ -21,7 +21,8 @@ WORKDIR /var/www/html
 
 # Copy composer files dan install dependencies (PENTING UNTUK CACHING)
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --optimize-autoloader
+RUN chown -R www-data:www-data . \
+    && su-exec www-data composer install --no-dev --no-interaction --optimize-autoloader
 
 # Copy aplikasi (kecuali public) ke direktori app
 RUN mkdir app
