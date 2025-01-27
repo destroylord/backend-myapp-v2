@@ -35,7 +35,8 @@ COPY ./public/. /var/www/html/
 RUN npm --prefix ./app install && npm --prefix ./app run build
 
 # Set permissions (PERBAIKAN PENTING)
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Run storage link (modifikasi path)
 RUN php /var/www/app/artisan storage:link || true
