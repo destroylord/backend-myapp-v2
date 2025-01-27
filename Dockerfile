@@ -29,7 +29,7 @@ COPY . app/
 RUN rm -rf app/public
 
 # Copy isi public ke root /var/www/html
-COPY ./public/* /var/www/html/
+COPY ./public/. /var/www/html/
 
 # Jalankan npm di dalam folder app
 RUN npm --prefix ./app install && npm --prefix ./app run build
