@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     zip \
     icu-dev \
     nodejs \
+    nano \
     npm \
     && docker-php-ext-configure intl \
     && docker-php-ext-install -j$(nproc) zip pdo pdo_pgsql pcntl intl
@@ -19,27 +20,21 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html 
 
-# Copy composer files dan install dependencies (PENTING UNTUK CACHING)
-COPY composer.json composer.lock ./
-# RUN composer install --no-dev --no-interaction --optimize-autoloader
+# Copy entire application
+COPY . .
 
-# Copy aplikasi (kecuali public) ke direktori app
-RUN mkdir app
-COPY . app/
-RUN rm -rf app/public
+# Install dependencies
+RUN composer install --no-dev --no-interaction --optimize-autoloader
 
-# Copy isi public ke root /var/www/html
-COPY ./public/. /var/www/html/
+# Install and build npm
+RUN npm install && npm run build
 
-# Jalankan npm di dalam folder app
-RUN npm --prefix ./app install && npm --prefix ./app run build
+# Set permissions
+RUN mkdir -p storage bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache
 
-# Set permissions (PERBAIKAN PENTING)
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Run storage link (modifikasi path)
-RUN php /var/www/app/artisan storage:link || true
+# Run storage link
+RUN php artisan storage:link || true
 
 # Expose port
 EXPOSE 9000
