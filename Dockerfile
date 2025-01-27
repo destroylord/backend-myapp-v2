@@ -20,23 +20,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html 
 
-# Copy composer files first
-COPY composer.json composer.lock ./
-
-# Install composer dependencies
-RUN composer install --no-dev --no-interaction --optimize-autoloader
-
-# Copy package files
-COPY package*.json ./
-
-# Install npm dependencies
-RUN npm ci
-
-# Copy entire application
+# Copy entire application first
 COPY . .
 
-# Build npm
-RUN npm run build
+# Install composer dependencies
+RUN composer install --no-dev --no-interaction --optimize-autoloader || (echo "Composer install failed" && exit 1)
+
+# Install npm dependencies and build
+RUN npm install && npm run build
 
 # Set permissions
 RUN mkdir -p storage bootstrap/cache && \
