@@ -26,8 +26,12 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --no-interaction --optimize-autoloader
 
+# Copy package.json and package-lock.json first
+COPY package*.json ./
+
 # Install and build npm
-RUN npm install && npm run build
+RUN npm install
+RUN npm run build
 
 # Set permissions
 RUN mkdir -p storage bootstrap/cache && \
